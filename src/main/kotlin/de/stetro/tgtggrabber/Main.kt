@@ -1,9 +1,10 @@
 package de.stetro.tgtggrabber
 
+import org.koin.core.context.startKoin
+
 fun main(args: Array<String>) {
-    println("Foo")
-}
-
-
-class Main {
+    startKoin {
+        modules(grabberModule)
+    }
+    Grabber().run(username = args[0], password = args[1], iftttkey=args[2])
 }
