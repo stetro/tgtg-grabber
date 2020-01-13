@@ -25,7 +25,7 @@ class TgtgRepository(retrofit: Retrofit) {
                         require(it.body() != null)
                         require(it.body()?.accessToken != null)
                         println("refreshed")
-//                        accessToken = it.body()?.accessToken
+                        accessToken = it.body()?.accessToken
                         it.body()?.accessToken
                     }
             }
@@ -41,7 +41,7 @@ class TgtgRepository(retrofit: Retrofit) {
                         println("authenticatication successfull")
                         refreshToken = it.body()?.refreshToken
                         userData = it.body()?.startupData?.user
-//                        accessToken = it.body()?.accessToken
+                        accessToken = it.body()?.accessToken
                         it.body()?.accessToken
                     }
             }
