@@ -64,5 +64,10 @@ class TgtgRepository(retrofit: Retrofit) {
                 require(it.body() != null)
                 it.body()!!
             }
+            .doOnError {
+                refreshToken = null
+                accessToken = null
+                userData = null
+            }
     }
 }

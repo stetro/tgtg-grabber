@@ -11,7 +11,7 @@ class Grabber : KoinComponent {
 
     private val tgtgRepository: TgtgRepository by inject()
     private val iftttRepository: IFTTTRepository by inject()
-    
+
     private var hasBeenAvailable = false
 
     fun run(username: String, password: String, iftttkey: String) {
