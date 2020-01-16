@@ -6,6 +6,9 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface IFTTTService {
-    @POST(" trigger/rewe/with/key/{iftttkey}")
-    fun triggerPush(@Path("iftttkey") iftttkey: String): Observable<Response<Unit>>
+    @POST(" trigger/{event}/with/key/{iftttkey}")
+    fun triggerPush(
+        @Path("event") iftttEvent: String,
+        @Path("iftttkey") iftttKey: String
+    ): Observable<Response<Unit>>
 }

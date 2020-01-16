@@ -6,5 +6,10 @@ fun main(args: Array<String>) {
     startKoin {
         modules(grabberModule)
     }
-    Grabber().run(username = args[0], password = args[1], iftttkey=args[2])
+    Grabber().run(
+        username = args[0],
+        password = args[1],
+        iftttEvent = args[2],
+        iftttKey = args[3]
+    )
 }

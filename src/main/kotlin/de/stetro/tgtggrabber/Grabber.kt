@@ -14,23 +14,25 @@ class Grabber : KoinComponent {
 
     private var hasBeenAvailable = false
 
-    fun run(username: String, password: String, iftttkey: String) {
+    fun run(username: String, password: String, iftttEvent: String, iftttKey: String) {
         println("start")
         Observable.interval(0, 5, TimeUnit.MINUTES)
             .map { tgtgRepository.getFavorites(username, password) }
             .blockingSubscribe { favorites ->
-                favorites.subscribe({
-                    if (it.items.isNotEmpty()) {
-                        if ((it.items[0].itemsAvailable > 0)) {
-                            println("${it.items[0].displayName} ist verfügbar")
-                            if (!hasBeenAvailable) {
-                                hasBeenAvailable = true
-                                iftttRepository.sendNotification(iftttkey)
-                            }
-                        } else {
-                            println("${it.items[0].displayName} ist ausverkauft")
-                            hasBeenAvailable = false
+                favorites.subscribe({ listItemResponse ->
+                    if (listItemResponse.items.isEmpty()) {
+                        return@subscribe
+                    }
+                    val item = listItemResponse.items[0]
+                    if ((item.itemsAvailable > 0)) {
+                        println("${item.displayName} ist verfügbar")
+                        if (!hasBeenAvailable) {
+                            hasBeenAvailable = true
+                            iftttRepository.sendNotification(iftttEvent, iftttKey)
                         }
+                    } else {
+                        println("${item.displayName} ist ausverkauft")
+                        hasBeenAvailable = false
                     }
                 }, {
                     it.printStackTrace()
